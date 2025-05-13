@@ -11,39 +11,45 @@
       margin: 0;
       padding: 0;
       font-family: 'Poppins', sans-serif;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      height: 100vh;
       background-color: #000;
       color: #fff;
-      text-align: center;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+      gap: 30px;
     }
 
-    .quote-container {
+    .quote-card {
       background: #111;
       border: 1px solid #444;
-      padding: 40px;
+      padding: 50px 40px;
       border-radius: 20px;
       max-width: 700px;
+      text-align: center;
       box-shadow: 0 10px 30px rgba(255, 255, 255, 0.1);
     }
 
     .quote {
       font-size: 2rem;
       font-weight: 600;
-      margin-bottom: 20px;
       line-height: 1.6;
     }
 
     .author {
       font-size: 1.2rem;
       font-style: italic;
-      color: #bbb;
-      margin-bottom: 30px;
+      color: #aaa;
+      margin-top: 20px;
     }
 
-    .share-button {
+    .buttons {
+      display: flex;
+      gap: 20px;
+    }
+
+    .btn {
       padding: 12px 24px;
       border-radius: 30px;
       border: 2px solid white;
@@ -52,42 +58,51 @@
       font-weight: bold;
       text-decoration: none;
       transition: 0.3s;
+      cursor: pointer;
     }
 
-    .share-button:hover {
+    .btn:hover {
       background: white;
       color: black;
     }
   </style>
 </head>
 <body>
-  <div class="quote-container" id="quote-card">
+
+  <!-- This is the sharable image section -->
+  <div class="quote-card" id="quote-card">
     <div class="quote" id="quote">Loading...</div>
     <div class="author" id="author">Loading...</div>
-    <a href="#" id="share-button" class="share-button" target="_blank">Share on WhatsApp</a>
-    <br/><br/>
-    <button onclick="downloadImage()" class="share-button">Download as Image</button>
   </div>
 
+  <!-- Functional buttons (outside image area) -->
+  <div class="buttons">
+    <button class="btn" onclick="downloadImage()">Download as Image</button>
+    <button class="btn" onclick="shareOnWhatsApp()">Share on WhatsApp</button>
+  </div>
+
+  <!-- Scripts -->
   <script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"></script>
   <script>
+    let currentImageDataUrl = '';
+
     fetch('quote.json')
       .then(response => response.json())
       .then(data => {
-        const quoteText = `"${data.quote}"`;
-        const authorText = `- ${data.author}`;
+        document.getElementById('quote').textContent = `"${data.quote}"`;
+        document.getElementById('author').textContent = `– ${data.author}`;
 
-        document.getElementById('quote').textContent = quoteText;
-        document.getElementById('author').textContent = authorText;
-
-        const shareText = `${quoteText} ${authorText}`;
-        const shareURL = `https://wa.me/?text=${encodeURIComponent(shareText)}`;
-        document.getElementById('share-button').setAttribute('href', shareURL);
+        // Pre-render image
+        setTimeout(() => {
+          html2canvas(document.getElementById("quote-card")).then(canvas => {
+            currentImageDataUrl = canvas.toDataURL("image/png");
+          });
+        }, 100); // wait for DOM update
       })
       .catch(error => {
-        console.error('Error fetching the quote:', error);
         document.getElementById('quote').textContent = 'Oops! Failed to load the quote.';
         document.getElementById('author').textContent = '';
+        console.error(error);
       });
 
     function downloadImage() {
@@ -97,6 +112,20 @@
         link.href = canvas.toDataURL();
         link.click();
       });
+    }
+
+    function shareOnWhatsApp() {
+      if (!currentImageDataUrl) {
+        alert("Image is not ready yet. Please try again in a moment.");
+        return;
+      }
+
+      // Optional: Upload the image to a backend or image host to get a sharable URL.
+      alert("Sharing image via WhatsApp requires hosting the image. Currently only text will be shared.");
+      
+      const text = document.getElementById('quote').textContent + " " + document.getElementById('author').textContent;
+      const url = `https://wa.me/?text=${encodeURIComponent(text)}`;
+      window.open(url, "_blank");
     }
   </script>
 </body>
