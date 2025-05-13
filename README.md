@@ -2,7 +2,7 @@
 
 https://akhilsu.github.io/quote-garden/
 
-Welcome to QuoteGarden, your daily dose of inspiration! This project fetches a new inspirational quote every day from the [ZenQuotes API](https://zenquotes.io/\) and displays it in a vibrant, colorful interface. You can even share the quote directly with your friends via WhatsApp!
+Welcome to QuoteGarden, your daily dose of inspiration! This project fetches a new inspirational quote every day from the [ZenQuotes API](https://zenquotes.io/) and displays it in a vibrant, colorful interface. You can even share the quote directly with your friends via WhatsApp!
 
 
 
