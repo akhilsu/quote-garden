@@ -1,6 +1,6 @@
 🌟 QuoteGarden - Quote of the Day
 
-[Live Demo](https://akhilsu.github.io/quote-garden/\)
+https://akhilsu.github.io/quote-garden/
 
 Welcome to QuoteGarden, your daily dose of inspiration! This project fetches a new inspirational quote every day from the [ZenQuotes API](https://zenquotes.io/\) and displays it in a vibrant, colorful interface. You can even share the quote directly with your friends via WhatsApp!
 
@@ -23,7 +23,7 @@ GitHub Pages: Hosts the project for free.
 
 📋 How It Works
 
-A Python script fetches a new Quote of the Day from the [ZenQuotes API](https://zenquotes.io/\).
+A Python script fetches a new Quote of the Day from the [ZenQuotes API](https://zenquotes.io/).
 The quote is saved in a quote.json file.
 The colorful UI dynamically loads the quote from the quote.json file and displays it.
 Users can share the quote directly on WhatsApp using the "Share on WhatsApp" button.
